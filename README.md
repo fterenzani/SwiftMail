@@ -4,7 +4,7 @@ A simple e-mail can be sent in this way:
 
     SwiftMail::newInstance($subject, $message)
         ->setTo($to)
-        ->setFrom($form)
+        ->setFrom($from)
         ->send()
     ;
 
@@ -18,4 +18,4 @@ The default transport can be changed using the static method SwiftMail::setDefau
 
     SwiftMail::setDefaultTransport($smtp);
 
-A list of Tranports is avvailable in the [Swift Mailer documentation](http://swiftmailer.org/docs/transport-types).
+A list of Tranports is available in the [Swift Mailer documentation](http://swiftmailer.org/docs/transport-types).
