@@ -5,7 +5,19 @@
  */
 
 /**
- * 
+ * SwiftMail is an implementation of the Facade pattern for Swiftmailer.
+ *
+ * A SwiftMail instance is a Swift_Message that the client can send without to
+ * know the Swift_Transport and the Swift_Mailer.
+ * See: {@link batch()} and {@link batchSend()}.
+ *
+ * SwiftMail also provide some shorthand methods to:
+ * - Attach file to the message. 
+ *   See: {@link attachFile()} and {@link attachData()}
+ *
+ * - Embed media contents to the message .
+ *   See: {@link embedFile()} and {@link embedData()}
+ *
  * @package Swift
  */
 class SwiftMail extends Swift_Message
@@ -19,9 +31,9 @@ class SwiftMail extends Swift_Message
     /**
      * Set the default Swift_Transport and initialize the Swift_Mailer
      *
-     * @param Swift_Trasport $name
+     * @param Swift_Trasport $transport
      */
-    static function setDefaultTransport(Swift_Transport $name) {
+    static function setDefaultTransport(Swift_Transport $transport) {
         self::$mailer = new Swift_Mailer($transport);
 
     }
@@ -86,7 +98,6 @@ class SwiftMail extends Swift_Message
      * The return value is the number of recipients who were accepted for
      * delivery.
      *
-     * @see send()
      * @param array &$failures, Optional, a list of addresses that were rejected by the Transport
      * @return int
      * @see send()
