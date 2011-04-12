@@ -3,6 +3,23 @@
  * @author Francesco Terenzani <f.terenzani@gmail.com>
  * @copyright Copyright (c) 2011, Francesco Terenzani
  */
+
+/**
+ * SwiftMail is an implementation of the Facade pattern for Swiftmailer.
+ *
+ * A SwiftMail instance is a Swift_Message that the client can send without to
+ * know the Swift_Transport and the Swift_Mailer.
+ * See: {@link batch()} and {@link batchSend()}.
+ *
+ * SwiftMail also provide some shorthand methods to:
+ * - Attach file to the message. 
+ *   See: {@link attachFile()} and {@link attachData()}
+ *
+ * - Embed media contents to the message .
+ *   See: {@link embedFile()} and {@link embedData()}
+ *
+ * @package Swift
+ */
 class SwiftMail extends Swift_Message
 {
 
@@ -14,22 +31,22 @@ class SwiftMail extends Swift_Message
     /**
      * Set the default Swift_Transport and initialize the Swift_Mailer
      *
-     * @param Swift_Trasport $name
+     * @param Swift_Trasport $transport
      */
-    static function setDefaultTransport(Swift_Transport $name) {
+    static function setDefaultTransport(Swift_Transport $transport) {
         self::$mailer = new Swift_Mailer($transport);
 
     }
-    
+
     /**
-    * Create a new Message
-    *
-    * @param string $subject
-    * @param string $body
-    * @param string $contentType
-    * @param string $charset
-    * @return Swift_Mime_Message
-    */
+     * Create a new Message
+     *
+     * @param string $subject
+     * @param string $body
+     * @param string $contentType
+     * @param string $charset
+     * @return Swift_Mime_Message
+     */
     static function newInstance($subject = null, $body = null, $contentType = null, $charset = null) {
         return new self($subject, $body, $contentType, $charset);
     }
@@ -52,18 +69,38 @@ class SwiftMail extends Swift_Message
     }
 
     /**
+     * Send the Message like it would be sent in a mail client.
      *
-     * @param array $failures A list of addresses that were rejected by the Transport
-     * @return int 1 on success 0 on
+     * All recipients (with the exception of Bcc) will be able to see the other
+     * recipients this message was sent to.
+     *
+     * If you need to send to each recipient without disclosing details about the
+     * other recipients see {@link batchSend()}.
+     *
+     * The return value is the number of recipients who were accepted for
+     * delivery.
+     *
+     * @param array &$failures, Optional, a list of addresses that were rejected by the Transport
+     * @return int
+     * @see batchSend()
      */
     function send(&$failures = null) {
         return self::getMailer()->send($this, $failures);
     }
 
     /**
+     * Send the Message to all recipients individually.
      *
-     * @param array $failures A list of addresses that were rejected by the Transport
-     * @return int The number of sent emails
+     * This differs from {@link send()} in the way headers are presented to the
+     * recipient.  The only recipient in the "To:" field will be the individual
+     * recipient it was sent to.
+     *
+     * The return value is the number of recipients who were accepted for
+     * delivery.
+     *
+     * @param array &$failures, Optional, a list of addresses that were rejected by the Transport
+     * @return int
+     * @see send()
      */
     function batchSend(&$failures = null) {
         return self::getMailer()->batchSend($this, $failures);
@@ -121,7 +158,7 @@ class SwiftMail extends Swift_Message
         $attachment = Swift_Attachment::newInstance($data, $fileName, $contentType);
         $this->attach($attachment);
         return $attachment;
-        
+
     }
 
 }
