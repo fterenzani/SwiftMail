@@ -1,0 +1,23 @@
+{
+    "name": "fterenzani/swiftmail",
+    "type": "library",
+    "description": "An implementation of the Facade pattern for Swift Mailer 5 and later",
+    "keywords": ["mail", "mailer","swiftmailer"],
+    "homepage": "https://github.com/fterenzani/SwiftMail",
+    "license": "LGPL",
+    "authors": [
+        {
+            "name": "Francesco Terenzani",
+            "email": "f.terenzani@gmail.com",
+            "homepage": "http://www.terenzani.it",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.4",
+        "swiftmailer/swiftmailer": ">=4.1,5.*"
+    },
+    "autoload": {
+        "psr-0": { "SwifMail": "" }
+    }
+}
