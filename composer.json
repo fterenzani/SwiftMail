@@ -18,6 +18,6 @@
         "swiftmailer/swiftmailer": ">=4.1,5.*"
     },
     "autoload": {
-        "psr-0": { "SwifMail": "" }
+        "psr-0": { "SwiftMail": "" }
     }
 }
